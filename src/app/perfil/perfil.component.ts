@@ -56,7 +56,9 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
     // Referencia a la card para animación de cierre de sesión
     setTimeout(() => {
-      this.cardRef = document.querySelector('.perfil-card') as HTMLElement;
+      if (typeof document !== 'undefined') {
+        this.cardRef = document.querySelector('.perfil-card') as HTMLElement;
+      }
     }, 0);
     if (typeof window === 'undefined' || !window.localStorage) {
       this.errorMsg = 'No se puede acceder al almacenamiento local en este entorno.';
@@ -109,8 +111,10 @@ export class PerfilComponent implements OnInit {
     if (tipo === 'completados') this.modalTitulo = 'Cursos Completados';
     if (tipo === 'medallas') this.modalTitulo = 'Tus Medallas';
     setTimeout(() => {
-      const modal = new bootstrap.Modal(document.getElementById('perfilModal'));
-      modal.show();
+      if (typeof document !== 'undefined') {
+        const modal = new bootstrap.Modal(document.getElementById('perfilModal'));
+        modal.show();
+      }
     }, 0);
   }
 
@@ -122,7 +126,7 @@ export class PerfilComponent implements OnInit {
     // Animación igual a configuración: fadeout card + overlay de carga
     this.loading = true;
     this.loadingMsg = 'Cerrando sesión...';
-    if (this.cardRef) {
+    if (typeof document !== 'undefined' && this.cardRef) {
       this.cardRef.style.transition = 'opacity 0.5s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1)';
       this.cardRef.style.opacity = '0.3';
       this.cardRef.style.transform = 'scale(0.97) translateY(18px)';
@@ -137,7 +141,7 @@ export class PerfilComponent implements OnInit {
       this.loading = false;
       this.loadingMsg = null;
       this.router.navigate(['/home']);
-      if (this.cardRef) {
+      if (typeof document !== 'undefined' && this.cardRef) {
         this.cardRef.style.opacity = '';
         this.cardRef.style.transform = '';
         this.cardRef.style.transition = '';
