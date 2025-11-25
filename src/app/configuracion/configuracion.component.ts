@@ -58,7 +58,7 @@ export class ConfiguracionComponent {
       }
       this.loading = false;
       this.router.navigate(['/home']);
-      if (card) {
+      if (typeof document !== 'undefined' && card) {
         card.style.opacity = '';
         card.style.transform = '';
         card.style.transition = '';
