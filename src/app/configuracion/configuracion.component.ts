@@ -43,11 +43,14 @@ export class ConfiguracionComponent {
   cerrarSesion() {
     this.loading = true;
     // Mejor animación: spinner + fadeout del card + feedback visual
-    const card = document.querySelector('.config-card') as HTMLElement;
-    if (card) {
-      card.style.transition = 'opacity 0.5s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1)';
-      card.style.opacity = '0.3';
-      card.style.transform = 'scale(0.97) translateY(18px)';
+    let card: HTMLElement | null = null;
+    if (typeof document !== 'undefined') {
+      card = document.querySelector('.config-card') as HTMLElement;
+      if (card) {
+        card.style.transition = 'opacity 0.5s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1)';
+        card.style.opacity = '0.3';
+        card.style.transform = 'scale(0.97) translateY(18px)';
+      }
     }
     setTimeout(() => {
       if (typeof window !== 'undefined' && window.localStorage) {
