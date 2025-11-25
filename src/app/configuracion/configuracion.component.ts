@@ -31,10 +31,12 @@ export class ConfiguracionComponent {
   }
 
   setModoOscuro(activo: boolean) {
-    if (activo) {
-      document.body.classList.add('modo-oscuro');
-    } else {
-      document.body.classList.remove('modo-oscuro');
+    if (typeof document !== 'undefined') {
+      if (activo) {
+        document.body.classList.add('modo-oscuro');
+      } else {
+        document.body.classList.remove('modo-oscuro');
+      }
     }
   }
 
