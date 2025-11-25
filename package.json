@@ -7,6 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "build:ssr": "ng build && ng run viam-web:server",
+    "serve:ssr": "node dist/viam-web/server/server.mjs",
     "serve:ssr:viam-web": "node dist/viam-web/server/server.mjs"
   },
   "private": true,

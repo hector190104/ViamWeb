@@ -222,7 +222,7 @@ export class CursoFormComponent {
       const actividadId = params['actividadId'];
       
       // Obtener actividad del state
-      const nav = window.history.state;
+      const nav = typeof window !== 'undefined' ? window.history.state : {};
       console.log('State navigation:', nav); // Debug
       
       if (nav && nav.actividad) {
@@ -267,7 +267,9 @@ export class CursoFormComponent {
     if (this.cursoId) {
       this.router.navigate(['/cursos', this.cursoId]);
     } else {
-      window.history.back();
+      if (typeof window !== 'undefined') {
+        window.history.back();
+      }
     }
   }
 

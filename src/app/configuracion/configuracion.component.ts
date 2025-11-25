@@ -16,14 +16,18 @@ export class ConfiguracionComponent {
 
   constructor(private router: Router) {
     // Mantener preferencia al recargar
-    this.modoOscuro = localStorage.getItem('modoOscuro') === 'true';
+    if (typeof window !== 'undefined' && window.localStorage) {
+      this.modoOscuro = localStorage.getItem('modoOscuro') === 'true';
+    }
     this.setModoOscuro(this.modoOscuro);
   }
 
   toggleModoOscuro() {
     // NO invertir, solo aplicar el valor actual
     this.setModoOscuro(this.modoOscuro);
-    localStorage.setItem('modoOscuro', String(this.modoOscuro));
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('modoOscuro', String(this.modoOscuro));
+    }
   }
 
   setModoOscuro(activo: boolean) {
@@ -44,7 +48,9 @@ export class ConfiguracionComponent {
       card.style.transform = 'scale(0.97) translateY(18px)';
     }
     setTimeout(() => {
-      localStorage.clear();
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.clear();
+      }
       this.loading = false;
       this.router.navigate(['/home']);
       if (card) {

@@ -63,7 +63,10 @@ export class PerfilComponent implements OnInit {
       this.loading = false;
       return;
     }
-    const userIdStr = localStorage.getItem('usuarioId');
+      let userIdStr = null;
+      if (typeof window !== 'undefined' && window.localStorage) {
+        userIdStr = localStorage.getItem('usuarioId');
+      }
     const userId = userIdStr ? Number(userIdStr) : 0;
     if (!userId || isNaN(userId)) {
       this.errorMsg = 'No se encontró el usuario autenticado.';
@@ -125,8 +128,12 @@ export class PerfilComponent implements OnInit {
       this.cardRef.style.transform = 'scale(0.97) translateY(18px)';
     }
     setTimeout(() => {
-      localStorage.clear();
-      sessionStorage.clear();
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.clear();
+        }
+        if (typeof window !== 'undefined' && window.sessionStorage) {
+          sessionStorage.clear();
+        }
       this.loading = false;
       this.loadingMsg = null;
       this.router.navigate(['/home']);
@@ -149,7 +156,10 @@ export class PerfilComponent implements OnInit {
   guardarBiografia() {
     this.guardandoBio = true;
     this.errorMsg = null;
-    const userIdStr = localStorage.getItem('usuarioId');
+    let userIdStr = null;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      userIdStr = localStorage.getItem('usuarioId');
+    }
     const userId = userIdStr ? Number(userIdStr) : 0;
     const nuevaBio = this.perfilForm.value.biografia || '';
     if (!userId || isNaN(userId)) {

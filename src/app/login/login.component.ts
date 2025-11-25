@@ -60,7 +60,9 @@ export class LoginComponent {
           next: (resp) => {
             this.loading = false;
             this.animacionBoton = false;
-            localStorage.setItem('usuarioId', resp.id);
+            if (typeof window !== 'undefined' && window.localStorage) {
+              localStorage.setItem('usuarioId', resp.id);
+            }
             this.intentosFallidos = 0;
             this.router.navigate(['/cursos']);
           },
