@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment'; // 👈 importa environment
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = environment.apiUrl; // 👈 usa la URL según el environment
 
   constructor(private http: HttpClient) { }
 
@@ -90,19 +91,6 @@ export class UsuarioService {
   listarGamificaciones(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/gamificacion/gamificaciones`);
   }
-
-  // ...existing code...
-
-  // VERIFICACIÓN DE CORREO
-  // enviarCodigoVerificacion(id: number): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/usuarios/${id}/enviar-codigo-verificacion`, {});
-  // }
-
-  // validarCodigoVerificacion(id: number, codigo: string): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/usuarios/${id}/validar-codigo-verificacion?codigo=${codigo}`, {});
-  // }
-
-  // ...existing code...
 
   // CURSOS
   crearCurso(curso: any): Observable<any> {

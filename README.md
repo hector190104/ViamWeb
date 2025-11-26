@@ -1,61 +1,204 @@
-# ViamWeb
+# VIAM – Plataforma para la Fomentación de Vocaciones STEAM  
+## Documentación completa del proyecto – README Oficial
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.13.
+## 1. Descripción general
+VIAM es una plataforma web diseñada para motivar y vincular a niñas y jóvenes con carreras STEAM mediante contenidos interactivos, mentorías, cursos y recursos educativos con enfoque de equidad de género. La aplicación está desarrollada como una PWA responsiva, orientada principalmente a uso en laptops/PC.
 
-## Development server
+## 2. Arquitectura general
+VIAM está compuesto por varios módulos tecnológicos:
 
-To start a local development server, run:
+### Aplicación Web (Frontend)
+- Framework: Angular
+- Diseño: Angular Material y Tailwind (si se desea)
+- Características:
+  - Autenticación y roles (jóvenes, docentes, admins)
+  - Visualización de cursos, lecciones y progreso
+  - Recomendación de cursos basada en IA
+  - Integración con API REST de Spring Boot
+  - App web responsiva
 
-```bash
-ng serve
+### API Backend (Spring Boot)
+- Endpoints principales:
+  - /api/usuarios
+  - /api/cursos
+  - /api/progreso
+  - /api/mentorias
+- Funciones:
+  - CRUD de usuarios, cursos y progreso
+  - Manejo de autenticación
+  - Preparación de datos para modelos de IA
+
+### Inteligencia Artificial
+Modelos entrenados con datos reales:
+- Random Forest Classifier
+- SVM
+- MLPClassifier (Red neuronal)
+Incluye:
+- Limpieza de datos
+- Ingeniería de características
+- Entrenamiento, evaluación y exportación
+- Orquestador en Python para manejo de los modelos
+
+### Bases de Datos
+- PostgreSQL: usuarios, cursos, progreso, mentorías
+
+### Despliegue
+- Vercel: para frontend Angular
+- Render o Railway: para API Spring Boot
+
+---
+
+## 3. Instalación y Ejecución del Proyecto
+
+### 3.1 Clonar el repositorio
+```
+git clone https://github.com/usuario/viam.git
+cd viam
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 4. Frontend – Angular
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 4.1 Requisitos
+- Node.js 18+
+- Angular CLI 17+
 
-```bash
-ng generate component component-name
+### 4.2 Instalación
+```
+cd frontend-viam
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+### 4.3 Configuración de variables
+Crear archivo:
+```
+src/environments/environment.ts
+```
+Con contenido similar a:
+```
+export const environment = {
+  production: false,
+  apiUrl: "https://tu-api-render.com/api",
+  firebaseConfig: {}
+};
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
+### 4.4 Ejecutar en desarrollo
+```
+ng serve -o
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+### 4.5 Construir para producción
+```
+ng build --configuration production
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 5. Backend – Spring Boot
 
-```bash
-ng e2e
+### 5.1 Requisitos
+- Java 17+
+- Maven / Gradle
+- PostgreSQL
+
+### 5.2 Configurar application.properties
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/viam
+spring.datasource.username=postgres
+spring.datasource.password=tu_password
+
+spring.data.mongodb.uri=mongodb://localhost:27017/viam
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 5.3 Ejecutar API
+```
+mvn spring-boot:run
+```
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-# viam-web
-# viam-web
+## 6. Inteligencia Artificial – Modelos
+
+### 6.1 Carpeta AI
+```
+/ai
+  datasets/
+  models_export/
+  training/
+    random_forest.py
+    svm.py
+    mlp.py
+  orchestrator.py
+```
+
+### 6.2 Entrenar modelos
+```
+python random_forest.py
+python svm.py
+python mlp.py
+```
+
+### 6.3 Orquestador
+```
+python orchestrator.py
+```
+
+---
+
+## 7. Despliegue
+```
+
+### 7.2 Angular en Netlify
+1. Crear un nuevo sitio en Netlify.
+2. Build:
+```
+npm install && ng build --configuration production
+```
+3. Publicar carpeta:
+```
+dist/viam-web/
+```
+4. En Netlify, configura el directorio de publicación como `dist/viam-web/`.
+5. (Opcional) Si usas rutas Angular, agrega un archivo `_redirects` en `dist/viam-web/` con:
+```
+/*    /index.html   200
+```
+
+---
+
+## 8. Funcionalidades Finales
+
+### Para Jóvenes
+- Cursos interactivos STEAM
+- Seguimiento de progreso
+- Recomendaciones automáticas
+
+### Para Docentes
+- Gestión de grupos
+- Recursos para actividades
+
+### Para Administradores
+- Gestión de usuarios
+- Panel de contenido
+- Métricas globales
+
+---
+
+## 9. Estado del Proyecto – TRL 4
+Prototipo validado en entorno de laboratorio, listo para pruebas controladas y mejora iterativa.
+
+---
+
+## 10. Licencia
+Proyecto académico de uso educativo.
+
+---
+
+## 11. Autores
+- Romero Aguilar Luis Salvador 
+- Torres Bernabé Moisés 
+- Xocua Márquez César Héctor 
+- Zamora Vega Luis Ángel 
+- Equipo académico
