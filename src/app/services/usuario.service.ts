@@ -1,13 +1,35 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment'; // 👈 importa environment
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
-  private apiUrl = environment.apiUrl; // 👈 usa la URL según el environment
+  private apiUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.apiUrl = this.getApiUrl();
+  }
+
+  private getApiUrl(): string {
+    // En servidor (prerender): usa producción
+    if (!isPlatformBrowser(this.platformId)) {
+      return 'https://viamapi-production.up.railway.app/api';
+    }
+
+    // En navegador: detecta por hostname
+    const hostname = window.location.hostname;
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://localhost:8080/api';
+    }
+    return 'https://viamapi-production.up.railway.app/api';
+  }
+
+  // ... resto del código igual
+
 
   // USUARIOS
   listarUsuarios(): Observable<any[]> {
