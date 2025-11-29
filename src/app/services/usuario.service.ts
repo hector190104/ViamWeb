@@ -5,30 +5,29 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
-  private apiUrl: string;
+  private apiUrl: string = this.initializeApiUrl();
 
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.apiUrl = this.getApiUrl();
-  }
+  ) {}
 
-  private getApiUrl(): string {
-    // En servidor (prerender): usa producción
-    if (!isPlatformBrowser(this.platformId)) {
+  private initializeApiUrl(): string {
+    // En servidor (SSR/prerender): usa SIEMPRE producción
+    if (typeof window === 'undefined') {
       return 'https://viamapi-production.up.railway.app/api';
     }
 
     // En navegador: detecta por hostname
     const hostname = window.location.hostname;
+    
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
       return 'http://localhost:8080/api';
     }
+    
+    // Producción (cualquier otro hostname)
     return 'https://viamapi-production.up.railway.app/api';
   }
-
-  // ... resto del código igual
 
 
   // USUARIOS
